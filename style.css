@@ -1,0 +1,27 @@
+.time {
+    border-right: black;
+    border-style: solid;
+    border-right-width: 1px;
+    height: 100px;
+}
+
+.input {
+    background: rgb(103, 197, 10);
+    height: 100px;
+    border: black;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.submit {
+    border-left: black;
+    border-style: solid;
+    border-left-width: 1px;
+    background: darkcyan;
+    height: 100px;
+
+}
+
+.subBtn {
+    display: block;
+}
