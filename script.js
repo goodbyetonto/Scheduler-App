@@ -3,7 +3,14 @@ $(document).ready(function () {
     const saveBtn = $(".btn");
 
     // Create variable to save the value of the class .form-control
-    var idArray = [];
+    var idArray = []; 
+
+    function clearLocal() {
+        var currentHour = parseInt(moment().hours());
+        if (currentHour > 18) {
+            localStorage.clear(); 
+        };
+    };
 
     createArray = function() {
         $('.form-control').each(function () {
@@ -28,7 +35,7 @@ $(document).ready(function () {
 
             // change the read/write status to read only of the same divs, to keep users from updating the contents of the <input> elements
             $(`#${hour}`).attr("readonly", true); 
-        }
+        };
     };
 
     // Define timer function
@@ -38,10 +45,11 @@ $(document).ready(function () {
         setInterval(function () {
             $(".date-time").html(moment().format('MMMM Do YYYY, h:mm:ss a'));
         }, 1000);
-    }
+    };
 
     // Call Timer function
     timer();
+    clearLocal(); 
     createArray(); 
     console.log(idArray); 
     pastPres(idArray);
@@ -51,7 +59,7 @@ $(document).ready(function () {
         var currentID = $(`#${i}`);
         var refill = localStorage.getItem(`ToDo ${i}`);
         currentID.val(refill);
-    }
+    };
 
     // Create variable to hold the hour value (0 - 23) of the current time, as an integer
     var currentHour = parseInt(moment().hours());
@@ -70,9 +78,9 @@ $(document).ready(function () {
 
             // Store in local memory the text that is input into the txtField div
             localStorage.setItem(`ToDo ${i}`, currentID.val());
-        }
+        };
     });
-})
+});
 
 
 
