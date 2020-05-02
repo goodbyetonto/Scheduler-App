@@ -77,7 +77,7 @@ $(document).ready(function () {
     };
 
     // When any of the html buttons with class of .btn are clicked
-    saveBtn.on("click", function () {
+    saveBtn.on("click", function (event) {
 
         // Prevent default behavior after click so as not to clear the form text
         event.preventDefault();
