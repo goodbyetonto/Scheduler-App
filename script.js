@@ -8,6 +8,7 @@ $(document).ready(function () {
     // Create global variable to save the current whole hour value, from 0 - 23
     let currentHour = parseInt(moment().hours());
 
+    // Define function for clearing local storage
     function clearLocal() {
         var currentHour = parseInt(moment().hours());
         if (currentHour > 18) {
@@ -15,12 +16,16 @@ $(document).ready(function () {
         };
     };
 
+    // Define function that creates an array of integer values of each of the id attributes, of each hour block
+    // This array will be referenced extensively throughout the app and stores its results in the idArray variable
+    /// Defined above
     function createArray () {
         $('.form-control').each(function () {
             idArray.push(parseInt(this.id));
         });
     };
-
+    
+    // Define function to affect styling of both past/present hour blocks
     function pastPres(idArray, currentHour) {
 
         // Create new array from 0 to currentHour (exlusive)
@@ -40,6 +45,7 @@ $(document).ready(function () {
         };
     };
 
+    // Define function to affect styling of future hour blocks
     function future(idArray, currentHour) {
 
         // Create new array from 0 to currentHour (exlusive)
