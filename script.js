@@ -3,38 +3,53 @@ $(document).ready(function () {
     const saveBtn = $(".btn");
 
     // Create variable to save the value of the class .form-control
-    var idArray = []; 
+    var idArray = [];
+
+    // Create global variable to save the current whole hour value, from 0 - 23
+    let currentHour = parseInt(moment().hours());
 
     function clearLocal() {
         var currentHour = parseInt(moment().hours());
         if (currentHour > 18) {
-            localStorage.clear(); 
+            localStorage.clear();
         };
     };
 
-    createArray = function() {
+    function createArray () {
         $('.form-control').each(function () {
             idArray.push(parseInt(this.id));
         });
-    }; 
+    };
 
-    function pastPres(idArray) {
-        // Create variable to hold the hour value (6 - 18) of the current time, as an integer
-        var currentHour = parseInt(moment().hours());
-        console.log(currentHour); 
+    function pastPres(idArray, currentHour) {
 
         // Create new array from 0 to currentHour (exlusive)
         var past = idArray.slice(0, idArray.indexOf(currentHour));
-        console.log(past); 
 
         // for each 'hour' in array, change the class for each .0 through .23 classes peretaining to the hour divs
         for (hour of past) {
 
             // change the opacity of the hour divs to make it clear that they are hours that have already past
-            $(`.${hour}`).css("opacity", ".5");
+            $(`.${hour}`).css("opacity", ".2");
 
             // change the read/write status to read only of the same divs, to keep users from updating the contents of the <input> elements
-            $(`#${hour}`).attr("readonly", true); 
+            $(`#${hour}`).attr("readonly", true);
+
+            // change the active status of the button for the identified hour block to inactive
+            $(`#${hour} button`).attr("disabled", true); 
+        };
+    };
+
+    function future(idArray, currentHour) {
+
+        // Create new array from 0 to currentHour (exlusive)
+        var future = idArray.slice(idArray.indexOf(currentHour + 1));
+
+        // for each 'hour' in array, change the class for each .0 through .23 classes peretaining to the hour divs
+        for (hour of future) {
+
+            // add the class of '.future' to the hour block divs that are those hours beyond the present
+            $(`.${hour}`).attr("class", "future");
         };
     };
 
@@ -47,12 +62,12 @@ $(document).ready(function () {
         }, 1000);
     };
 
-    // Call Timer function
+    // Function Calls
     timer();
-    clearLocal(); 
-    createArray(); 
-    console.log(idArray); 
-    pastPres(idArray);
+    clearLocal();
+    createArray();
+    pastPres(idArray, currentHour);
+    future(idArray, currentHour);
 
     // Get each ToDo item from local storage and place back in respective form fields with class .form-control
     for (i of idArray) {
@@ -60,9 +75,6 @@ $(document).ready(function () {
         var refill = localStorage.getItem(`ToDo ${i}`);
         currentID.val(refill);
     };
-
-    // Create variable to hold the hour value (0 - 23) of the current time, as an integer
-    var currentHour = parseInt(moment().hours());
 
     // When any of the html buttons with class of .btn are clicked
     saveBtn.on("click", function () {

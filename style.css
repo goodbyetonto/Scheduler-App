@@ -11,10 +11,9 @@
 
 }
 
-/* .pasTime {
-    background: hotpink;
-    opacity: .2;
-} */
+.future {
+    background: rgb(189, 212, 220);
+}
 
 .time {
 padding-top: 30px;
